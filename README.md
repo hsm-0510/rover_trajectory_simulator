@@ -33,3 +33,15 @@ This Python script simulates a rover's trajectory by:
 5. Saving the resulting x, y, z coordinates along with time to a CSV file.
 
 6. Plotting the 3D trajectory and analyzing net velocity and acceleration, with both raw and smoothed velocity profiles displayed for comparison. The code is designed to be modular, allowing adjustments to parameters like window_size and ramp_duration to fine-tune the smoothing and transition effects.
+
+# 3D Plot
+
+![image](https://github.com/user-attachments/assets/da7088f4-bb9e-4052-8dd2-3fe96a1b880c)
+
+# Net Velocity Plot
+
+![image](https://github.com/user-attachments/assets/c8bef796-4b6a-4eb1-b039-9c9dfb12fc2d)
+
+#Net Acceleration Plot
+
+![image](https://github.com/user-attachments/assets/55df72ad-4405-44c7-9895-067da8c3fdc4)
