@@ -1,10 +1,10 @@
 # Purpose
 
-The purpose of this code is to simulate a rocket trajectory from a starting geographic location to an ending location, incorporating a stationary phase, acceleration, constant speed, and deceleration phases, while adding a parabolic height profile. The simulation generates a 3D trajectory, calculates and plots net velocity and net acceleration, and saves the trajectory data to a CSV file for further analysis or visualization.
+The purpose of this code is to simulate a rover trajectory from a starting geographic location to an ending location, incorporating a stationary phase, acceleration, constant speed, and deceleration phases, while adding a parabolic height profile. The simulation generates a 3D trajectory, calculates and plots net velocity and net acceleration, and saves the trajectory data to a CSV file for further analysis or visualization.
 
 # Design Method
 
-The code employs a physics-based approach to model the rocket's motion:
+The code employs a physics-based approach to model the rover's motion:
 
 1. Coordinate Transformation: Utilizes the pyproj.Transformer to convert geodetic coordinates (latitude, longitude, altitude) to Earth-Centered Earth-Fixed (ECEF) coordinates for 3D spatial representation.
 
@@ -20,7 +20,7 @@ The code employs a physics-based approach to model the rocket's motion:
 
 # Description
 
-This Python script simulates a rocket's trajectory by:
+This Python script simulates a rover's trajectory by:
 
 1. Defining input parameters such as start/end coordinates, maximum height, speed, acceleration, and time durations.
 
