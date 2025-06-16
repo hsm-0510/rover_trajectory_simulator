@@ -28,7 +28,7 @@ This Python script simulates a rover's trajectory by:
 
 3. Calculating a scaled motion profile to fit the total distance, including a stationary period and smoothed acceleration/deceleration phases.
 
-4. Generating position data by integrating a smoothed speed profile and applying a parabolic height offset.
+4. Generating position data by integrating a smoothed speed profile and applying a linear height offset.
 
 5. Saving the resulting x, y, z coordinates along with time to a CSV file.
 
