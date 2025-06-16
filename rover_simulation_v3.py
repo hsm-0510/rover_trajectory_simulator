@@ -10,20 +10,21 @@ start_lat = 25.4900       # degrees
 start_lon = 46.7210       # degrees
 start_alt = 10            # meters
 
-end_lat = 25.5230         # degrees
-end_lon = 50.4610         # degrees
+end_lat = 25.4960         # degrees
+end_lon = 50.0000         # degrees
 end_alt = 18000           # meters
 
-max_height = 18000      # meters above the highest of start/end alt
+max_height = end_alt      # meters above the highest of start/end alt
 max_speed = 1500        # meters per second  <-- This is the ceiling
 max_acceleration = 40   # meters per second squared
-stationary_duration = 100   # seconds
+stationary_duration = 80   # seconds
 time_step = 0.1         # seconds
 output_csv = "simulated_trajectory.csv"  # output filename
 
 # =======================
 # FUNCTION DEFINITIONS
 # =======================
+
 
 def geodetic_to_ecef(lat, lon, alt):
     transformer = Transformer.from_crs("epsg:4979", "epsg:4978", always_xy=True)
@@ -244,7 +245,7 @@ def simulate_trajectory(
 # =======================
 simulate_trajectory(
     start_lat, start_lon, start_alt,
-    end_lat, end_lon, end_alt,
-    max_height, max_speed, max_acceleration/2.16, stationary_duration,
+    end_lat, end_lon, end_alt*1.273757899,
+    max_height*1.273757899, max_speed, max_acceleration/2.16, stationary_duration,
     time_step, output_csv
 )
