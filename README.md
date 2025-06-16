@@ -1,6 +1,6 @@
 # Purpose
 
-The purpose of this code is to simulate a rover trajectory from a starting geographic location to an ending location, incorporating a stationary phase, acceleration, constant speed, and deceleration phases, while adding a parabolic height profile. The simulation generates a 3D trajectory, calculates and plots net velocity and net acceleration, and saves the trajectory data to a CSV file for further analysis or visualization.
+The purpose of this code is to simulate a rover trajectory from a starting geographic location to an ending location, incorporating a stationary phase, acceleration, and constant speed phases. The simulation generates a 3D trajectory, calculates and plots net velocity and net acceleration, and saves the trajectory data to a CSV file for further analysis or visualization.
 
 # Design Method
 
@@ -36,12 +36,18 @@ This Python script simulates a rover's trajectory by:
 
 # 3D Plot
 
-![image](https://github.com/user-attachments/assets/da7088f4-bb9e-4052-8dd2-3fe96a1b880c)
+![image](https://github.com/user-attachments/assets/dcd0c2a2-b8f9-4a43-a21b-9563895fa136)
+
 
 # Net Velocity Plot
 
-![image](https://github.com/user-attachments/assets/c8bef796-4b6a-4eb1-b039-9c9dfb12fc2d)
+![image](https://github.com/user-attachments/assets/52d19348-8648-4ae4-b9e7-f0d0e95ed51e)
+
 
 # Net Acceleration Plot
 
-![image](https://github.com/user-attachments/assets/55df72ad-4405-44c7-9895-067da8c3fdc4)
+![image](https://github.com/user-attachments/assets/9a4451c0-d3ea-490c-9e38-45166fc252f5)
+
+# Working Code
+
+rover_simulation_v3.py
