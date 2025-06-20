@@ -72,15 +72,15 @@ This Python script simulates a rover's trajectory by:
 ```
 # 3D Plot
 
-![image](https://github.com/user-attachments/assets/de319970-6dac-4032-a177-2f1f1ba759ef)
+![image](https://github.com/user-attachments/assets/e72df3d5-43a4-4149-959f-26ef1b6757d1)
 
 
 # Net Velocity Plot
 
-![image](https://github.com/user-attachments/assets/16ee6843-9117-4f49-9194-6bcd1d62def9)
+![image](https://github.com/user-attachments/assets/45c9ecfd-e045-4b11-9db9-9f7cd242d5af)
 
 
 # Net Acceleration Plot
 
-![image](https://github.com/user-attachments/assets/513290b1-06cf-4994-999b-9835164c5620)
+![image](https://github.com/user-attachments/assets/43f3d782-cb11-46b1-b31a-8380034da694)
 
