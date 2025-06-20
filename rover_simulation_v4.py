@@ -309,8 +309,8 @@ def main():
         ax_3d.grid(True)
 
         plt.figure(figsize=(10, 6))
-        plt.plot(times, speeds, color='purple', linewidth=2)
-        plt.plot(times, speeds_us, color='black', linewidth=2)
+        plt.plot(times, speeds, color='purple', linewidth=2, label='Smoothed Speed')
+        plt.plot(times, speeds_us, color='green', linewidth=2, label='Raw Speed')
         plt.xlabel('Time (s)')
         plt.ylabel('Net Speed (m/s)')
         plt.title('Rover Net Speed Over Time')
@@ -319,8 +319,8 @@ def main():
         plt.legend()
 
         plt.figure(figsize=(10, 6))
-        plt.plot(times, accelerations, color='orange', linewidth=2)
-        plt.plot(times, accelerations_us, color='black', linewidth=2)
+        plt.plot(times, accelerations, color='orange', linewidth=2, label='Smoothed Acceleration')
+        plt.plot(times, accelerations_us, color='green', linewidth=2, label='Raw Acceleration')
         plt.xlabel('Time (s)')
         plt.ylabel('Net Acceleration (m/s²)')
         plt.title('Rover Net Acceleration Over Time')
