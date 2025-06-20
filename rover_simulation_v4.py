@@ -167,8 +167,8 @@ def generate_trajectory(
                 next_acceleration_magnitude = 0
             next_velocity_magnitude = current_velocity_magnitude + (next_acceleration_magnitude * dt)
             
-#             avg_accel_for_step = (current_acceleration_magnitude + next_acceleration_magnitude) / 2.0
-#             next_velocity_magnitude = current_velocity_magnitude + avg_accel_for_step * dt
+            avg_accel_for_step = (current_acceleration_magnitude + next_acceleration_magnitude) / 2.0
+            next_velocity_magnitude = current_velocity_magnitude + avg_accel_for_step * dt
             
             if next_velocity_magnitude >= max_speed:
                 next_velocity_magnitude = max_speed
@@ -210,18 +210,20 @@ def generate_trajectory(
 
 # --- Apply Moving Average Filter ---
 def apply_moving_average(data, window_size):
-    """Applies a moving average filter to the speed and acceleration data."""
+    """Applies a moving average filter to x, y, z, speed, and acceleration."""
     smoothed_data = []
     for i in range(len(data)):
         if i < window_size - 1:
-            # For the initial points, use the average of available points
             start_idx = 0
         else:
             start_idx = i - window_size + 1
         window = data[start_idx:i + 1]
+        avg_x = sum(point[1] for point in window) / len(window)
+        avg_y = sum(point[2] for point in window) / len(window)
+        avg_z = sum(point[3] for point in window) / len(window)
         avg_speed = sum(point[4] for point in window) / len(window)
         avg_accel = sum(point[5] for point in window) / len(window)
-        smoothed_data.append([data[i][0]] + data[i][1:4] + [avg_speed, avg_accel])
+        smoothed_data.append([data[i][0], avg_x, avg_y, avg_z, avg_speed, avg_accel])
     return smoothed_data
 
 # --- Write Trajectory Data to CSV File ---
@@ -253,7 +255,7 @@ def main():
     max_speed = 1500.0
     max_acceleration = 10
     rate_of_acceleration = 1
-    rate_of_deceleration = 0.1
+    rate_of_deceleration = 1
     stationary_duration = 80
     sample_time = 0.1
 
@@ -274,7 +276,7 @@ def main():
 
     if trajectory_data:
         # Apply moving average filter with a window size of 5
-        window_size = 5
+        window_size = 350
         smoothed_trajectory = apply_moving_average(trajectory_data, window_size)
 
         times = [point[0] for point in smoothed_trajectory[:-1]]
@@ -283,6 +285,8 @@ def main():
         zs = [point[3] for point in smoothed_trajectory[:-1]]
         speeds = [point[4] for point in smoothed_trajectory[:-1]]
         accelerations = [point[5] for point in smoothed_trajectory[:-1]]
+        speeds_us = [point[4] for point in trajectory_data[:-1]]
+        accelerations_us = [point[5] for point in trajectory_data[:-1]]
 
         write_to_csv(output_filename, smoothed_trajectory[:-1])
         print(f"\nTotal trajectory points generated: {len(smoothed_trajectory)}")
@@ -306,6 +310,7 @@ def main():
 
         plt.figure(figsize=(10, 6))
         plt.plot(times, speeds, color='purple', linewidth=2)
+        plt.plot(times, speeds_us, color='black', linewidth=2)
         plt.xlabel('Time (s)')
         plt.ylabel('Net Speed (m/s)')
         plt.title('Rover Net Speed Over Time')
@@ -315,6 +320,7 @@ def main():
 
         plt.figure(figsize=(10, 6))
         plt.plot(times, accelerations, color='orange', linewidth=2)
+        plt.plot(times, accelerations_us, color='black', linewidth=2)
         plt.xlabel('Time (s)')
         plt.ylabel('Net Acceleration (m/s²)')
         plt.title('Rover Net Acceleration Over Time')
