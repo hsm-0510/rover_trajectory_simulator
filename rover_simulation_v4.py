@@ -55,7 +55,7 @@ def lla_to_ecef(lat_deg, lon_deg, alt_m):
 def generate_trajectory(
     start_lat, start_lon, start_alt,
     end_lat, end_lon, end_alt,
-    max_speed, max_acceleration, rate_of_acceleration,
+    max_speed, max_acceleration, rate_of_acceleration, rate_of_deceleration,
     stationary_duration, sample_time=0.1
 ):
     """
@@ -64,6 +64,10 @@ def generate_trajectory(
     """
     trajectory_points = []
 
+    # Point of Deceleration
+    time_to_decelerate = max_acceleration/rate_of_deceleration
+    speed_at_dec = ((max_speed) - (0.5 * (rate_of_deceleration * time_to_decelerate * time_to_decelerate)))
+    
     # Convert start and end LLA coordinates to ECEF
     start_ecef = lla_to_ecef(start_lat, start_lon, start_alt)
     end_ecef = lla_to_ecef(end_lat, end_lon, end_alt)
@@ -123,24 +127,54 @@ def generate_trajectory(
             avg_accel_for_step = (current_acceleration_magnitude + next_acceleration_magnitude) / 2.0
             next_velocity_magnitude = current_velocity_magnitude + avg_accel_for_step * dt
             
+                
             if next_velocity_magnitude >= max_speed:
                 next_velocity_magnitude = max_speed
                 current_phase = "constant_speed"
                 next_acceleration_magnitude = 0.0
-
+            
+            if (next_velocity_magnitude >= speed_at_dec) and (next_velocity_magnitude < max_speed):
+                next_acceleration_magnitude = current_acceleration_magnitude - (rate_of_deceleration * dt)
+                if next_acceleration_magnitude < 0:
+                    next_acceleration_magnitude = 0
+                next_velocity_magnitude = current_velocity_magnitude + (next_acceleration_magnitude * dt)
+                current_phase = "deceleration"
+                
         elif current_phase == "constant_accel":
-            next_acceleration_magnitude = max_acceleration
-            next_velocity_magnitude = current_velocity_magnitude + max_acceleration * dt
+            
+            if (next_velocity_magnitude >= speed_at_dec) and (next_velocity_magnitude < max_speed):
+                next_acceleration_magnitude = current_acceleration_magnitude - (rate_of_deceleration * dt)
+                if next_acceleration_magnitude < 0:
+                    next_acceleration_magnitude = 0
+                next_velocity_magnitude = current_velocity_magnitude + (next_acceleration_magnitude * dt)
+                current_phase = "deceleration"
             
             if next_velocity_magnitude >= max_speed:
                 next_velocity_magnitude = max_speed
                 current_phase = "constant_speed"
                 next_acceleration_magnitude = 0.0
+            
+            next_acceleration_magnitude = max_acceleration
+            next_velocity_magnitude = current_velocity_magnitude + max_acceleration * dt
 
         elif current_phase == "constant_speed":
             next_velocity_magnitude = max_speed
             next_acceleration_magnitude = 0.0
 
+        elif current_phase == "deceleration":
+            next_acceleration_magnitude = current_acceleration_magnitude - (rate_of_deceleration * dt)
+            if next_acceleration_magnitude < 0:
+                next_acceleration_magnitude = 0
+            next_velocity_magnitude = current_velocity_magnitude + (next_acceleration_magnitude * dt)
+            
+#             avg_accel_for_step = (current_acceleration_magnitude + next_acceleration_magnitude) / 2.0
+#             next_velocity_magnitude = current_velocity_magnitude + avg_accel_for_step * dt
+            
+            if next_velocity_magnitude >= max_speed:
+                next_velocity_magnitude = max_speed
+                current_phase = "constant_speed"
+                next_acceleration_magnitude = 0.0
+            
         avg_velocity_for_step = (current_velocity_magnitude + next_velocity_magnitude) / 2.0
         distance_to_move_this_step = avg_velocity_for_step * dt
 
@@ -218,7 +252,8 @@ def main():
 
     max_speed = 1500.0
     max_acceleration = 10
-    rate_of_acceleration = 2
+    rate_of_acceleration = 1
+    rate_of_deceleration = 0.1
     stationary_duration = 80
     sample_time = 0.1
 
@@ -233,23 +268,23 @@ def main():
     trajectory_data = generate_trajectory(
         start_lat, start_lon, start_alt,
         end_lat, end_lon, end_alt,
-        max_speed, max_acceleration, rate_of_acceleration,
+        max_speed, max_acceleration, rate_of_acceleration, rate_of_deceleration,
         stationary_duration, sample_time
     )
 
     if trajectory_data:
         # Apply moving average filter with a window size of 5
-        window_size = 500
+        window_size = 5
         smoothed_trajectory = apply_moving_average(trajectory_data, window_size)
 
-        times = [point[0] for point in smoothed_trajectory]
-        xs = [point[1] for point in smoothed_trajectory]
-        ys = [point[2] for point in smoothed_trajectory]
-        zs = [point[3] for point in smoothed_trajectory]
-        speeds = [point[4] for point in smoothed_trajectory]
-        accelerations = [point[5] for point in smoothed_trajectory]
+        times = [point[0] for point in smoothed_trajectory[:-1]]
+        xs = [point[1] for point in smoothed_trajectory[:-1]]
+        ys = [point[2] for point in smoothed_trajectory[:-1]]
+        zs = [point[3] for point in smoothed_trajectory[:-1]]
+        speeds = [point[4] for point in smoothed_trajectory[:-1]]
+        accelerations = [point[5] for point in smoothed_trajectory[:-1]]
 
-        write_to_csv(output_filename, smoothed_trajectory)
+        write_to_csv(output_filename, smoothed_trajectory[:-1])
         print(f"\nTotal trajectory points generated: {len(smoothed_trajectory)}")
         print(f"First trajectory point: {smoothed_trajectory[0]}")
         print(f"Last trajectory point:  {smoothed_trajectory[-1]}")
