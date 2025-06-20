@@ -63,21 +63,24 @@ This Python script simulates a rover's trajectory by:
 
     max_speed = 1500.0
     max_acceleration = 10
-    rate_of_acceleration = 0.1
-    rate_of_deceleration = 0.1
+    rate_of_acceleration = 1
+    rate_of_deceleration = 1
     stationary_duration = 80
     sample_time = 0.1
+
+    window_size = 350
 ```
 # 3D Plot
 
-![image](https://github.com/user-attachments/assets/5a6ea499-2c57-4a76-9d05-ba65224127b1)
+![image](https://github.com/user-attachments/assets/de319970-6dac-4032-a177-2f1f1ba759ef)
 
 
 # Net Velocity Plot
 
-![image](https://github.com/user-attachments/assets/43cef979-b62d-40f6-83bc-1c576f44dc55)
+![image](https://github.com/user-attachments/assets/16ee6843-9117-4f49-9194-6bcd1d62def9)
 
 
 # Net Acceleration Plot
 
-![image](https://github.com/user-attachments/assets/f7ac3d61-4261-4deb-9fcb-7a58d77d00ad)
+![image](https://github.com/user-attachments/assets/513290b1-06cf-4994-999b-9835164c5620)
+
