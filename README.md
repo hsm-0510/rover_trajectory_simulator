@@ -12,6 +12,8 @@ The purpose of this code is to simulate a rover trajectory from a starting geogr
 ./gps-sdr-sim -e brdc3610.24n -u simulated_trajectory.csv -b 8
 ```
 
+Note: the -e brdc3160.24 can change according to the ephemeris file being used, the ephemeris files can be downloaded through link provided at gps-sdr-sim repository.
+
 4. The gpssim.bin file would be created and ready for trajectory simulation.
 
 See following link for gps-sdr-sim installation guide: https://github.com/osqzss/gps-sdr-sim
