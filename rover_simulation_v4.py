@@ -257,7 +257,7 @@ def main():
     stationary_duration = 80
     sample_time = 0.1
 
-    output_filename = "rover_trajectory.csv"
+    output_filename = "simulated_trajectory.csv"
 
     print(f"\nStarting Point: LLA({start_lat}, {start_lon}, {start_alt})")
     print(f"Ending Point:   LLA({end_lat}, {end_lon}, {end_alt})")
