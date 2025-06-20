@@ -8,9 +8,9 @@ The purpose of this code is to simulate a rover trajectory from a starting geogr
 2. Run the python code rover_simulation_v4.py and look for the generated csv file 'simulated_trajectory.csv'
 3. Copy the csv file at the installation directory of gps-sdr-sim and run the following command:
 
-'''
+```
 ./gps-sdr-sim -e brdc3610.24n -u simulated_trajectory.csv -b 8
-'''
+```
 
 4. The gpssim.bin file would be created and ready for trajectory simulation.
 
@@ -50,7 +50,7 @@ This Python script simulates a rover's trajectory by:
 
 
 # Example Parameters
-'''
+```
     start_lat = 25.4900
     start_lon = 46.7210
     start_alt = 10.0
@@ -65,7 +65,7 @@ This Python script simulates a rover's trajectory by:
     rate_of_deceleration = 0.1
     stationary_duration = 80
     sample_time = 0.1
-'''
+```
 # 3D Plot
 
 ![image](https://github.com/user-attachments/assets/5a6ea499-2c57-4a76-9d05-ba65224127b1)
