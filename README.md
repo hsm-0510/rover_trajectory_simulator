@@ -88,8 +88,7 @@ This Python script simulates a rover's trajectory by:
 
 # Future Works
 
-1.1. Problem: Sudden Jerks appear when selected rate of acceleration or deceleration do not match with final velocity, which leads to premature halt at max speed and suddent jerk.
-1.2. Solution: Compute the rate of deceleration that achieves longest deceleration time without jerk. If the computed rate of deceleration is more than user's, then implement the computed rate of deceleration. However, if the computed rate of deceleration is less than user's, then implement the user's rate of deceleration instead.
-
-2.2. Problem: Increase number of waypoints for trajectory simulation with non-jerk directional changes
-2.3. Solution: Use of polynomial equation-based path estimation for non-jerk movement through the user-defined waypoints
+1. Problem: Sudden Jerks appear when selected rate of acceleration or deceleration do not match with final velocity, which leads to premature halt at max speed and suddent jerk.
+2. Solution: Compute the rate of deceleration that achieves longest deceleration time without jerk. If the computed rate of deceleration is more than user's, then implement the computed rate of deceleration. However, if the computed rate of deceleration is less than user's, then implement the user's rate of deceleration instead.
+3. Problem: Increase number of waypoints for trajectory simulation with non-jerk directional changes
+4. Solution: Use of polynomial equation-based path estimation for non-jerk movement through the user-defined waypoints
